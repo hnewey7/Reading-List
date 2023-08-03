@@ -30,25 +30,47 @@ def init():
         # Create log path.
         log = open(logPath,"x")
         
-    return log, numberRead, stack
+        # Set numberRead to zero.
+        numberRead = 0
+        stack = []
+        
+    return logPath, numberRead, stack 
 
 # Function to save data on close.
-def onClose(log, numberRead, stack):
+def onClose(logPath, numberRead, stack):
+    
+    log = open(logPath, 'w')
     
     # Writing data to log.
-    log.write(numberRead, stack)
+    log.write(str(numberRead))
+    log.write(stack)
     
-    # Saving log file.
+    # Saving log file.S
     log.close()
     
 # Main function.
 def main():
     
-    # Getting values from initialisation.
-    [log, numberRead, stack] = init()
+    if len(stack) == 0:  
+        # Set stats if no stack.
+        currentRead = "Not reading anything currently."
+        numberBook = 0
     
-    # Defining function to run at exit.
-    atexit(onClose(log, numberRead, stack))
+    else:
+        # Get stats when valid stack.
+        currentRead = stack[0]
+        numberRead = len(stack)-1
+        
+    # Display all data.
+    print(" - - - - - - - - - - - - - - - - - - \n         Reading List Summary \n - - - - - - - - - - - - - - - - - - ")
+    
+# Getting values from initialisation.
+[logPath, numberRead, stack] = init()
     
 main()
 
+numberRead = 1
+stack = "Attached"
+
+# Defining function to run at exit.
+atexit.register(onClose, logPath, numberRead, stack)
