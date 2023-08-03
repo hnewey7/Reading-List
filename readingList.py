@@ -30,21 +30,25 @@ def init():
         # Create log path.
         log = open(logPath,"x")
         
-    return logPath, numberRead, stack
+    return log, numberRead, stack
 
 # Function to save data on close.
-def onClose():
+def onClose(log, numberRead, stack):
     
-    return 
-
+    # Writing data to log.
+    log.write(numberRead, stack)
+    
+    # Saving log file.
+    log.close()
+    
 # Main function.
 def main():
     
     # Getting values from initialisation.
-    [logPath, numberRead, stack] = init()
+    [log, numberRead, stack] = init()
     
-
+    # Defining function to run at exit.
+    atexit(onClose(log, numberRead, stack))
+    
 main()
 
-# Defining function to run at exit.
-atexit(onClose)
