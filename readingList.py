@@ -59,18 +59,22 @@ def main():
     else:
         # Get stats when valid stack.
         currentRead = stack[0]
-        numberRead = len(stack)-1
+        numberBook = len(stack)-1
         
     # Display all data.
-    print(" - - - - - - - - - - - - - - - - - - \n         Reading List Summary \n - - - - - - - - - - - - - - - - - - ")
+    print(" - - - - - - - - - - - - - - - - - - \n         Reading List Summary \n - - - - - - - - - - - - - - - - - - \n")
+    print(" Current Book: " + currentRead)
+    print(" Number of Books: "  + str(numberBook))
+    print(" Books Read: " + str(numberRead))
+    
     
 # Getting values from initialisation.
 [logPath, numberRead, stack] = init()
-    
-main()
 
 numberRead = 1
 stack = "Attached"
+
+main()
 
 # Defining function to run at exit.
 atexit.register(onClose, logPath, numberRead, stack)
