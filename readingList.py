@@ -15,9 +15,9 @@ def init():
     logPath = getLog()
     
     # Getting data from csv file.
-    [numberRead, stack] = getData(logPath)
+    [numberRead, stack, currentRead, numberBook] = getData(logPath)
     
-    return numberRead, stack
+    return numberRead, stack, currentRead, numberBook
 
 # Get log function
 def getLog():
@@ -45,7 +45,7 @@ def getData(logPath):
 # Main function.
 def main(numberRead, stack, currentRead, numberBook):
     # Displaying statistics for user.
-    displayStats(numberRead, stack)
+    displayStats(numberRead, stack, currentRead, numberBook)
     
 #    # Prompt user for command input
 #    userCommand = promptInput()
@@ -54,9 +54,12 @@ def main(numberRead, stack, currentRead, numberBook):
 #    [numberRead, stack] = evalInput(userCommand)
 
 # Function for displaying stats.
-def displayStats(numberRead, stack):
+def displayStats(numberRead, stack, currentRead, numberBook):
     
-    #print()
+    print(" - - - - - - - - - - - - - - - - - - \n        Reading List Summary: \n - - - - - - - - - - - - - - - - - -")
+    print("Currently Reading: " + str(currentRead))
+    print("Number of Books to Read: " + str(numberBook))
+    print("Books Read: " + str(numberRead))
     
     return
 # - - - - - - - - - - - - - - - - - - - - - 
@@ -64,7 +67,6 @@ def displayStats(numberRead, stack):
 #def onClose():
 #    # Saving data.
 #    saveData(numberRead, stack)
-
 
 [numberRead, stack, currentRead, numberBook] = init()
 main(numberRead, stack, currentRead, numberBook)
