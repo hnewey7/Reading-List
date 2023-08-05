@@ -16,20 +16,27 @@ def init():
     
     # Getting data from csv file.
     [numberRead, stack] = getData(logPath)
+    
+    return numberRead, stack
 
 # Get log function
 def getLog():
     # Getting events log path.
     folderPath = os.path.dirname(os.path.abspath(__file__))
-    logPath = folderPath + "\\logs.csv"
+    logPath = folderPath + "\\test.csv"
     
     return logPath
 
 # Get data function.
 def getData(logPath):
+    # Reading data from csv file.
+    data = pandas.read_csv(logPath)
+    datalist = data["log"].tolist()
     
-    
-    
+    # Extracting stats from data.
+    numberRead = datalist[0]
+    stack = datalist[1:len(datalist)]
+
     return numberRead, stack
 
 # - - - - - - - - - - - - - - - - - - - - - 
