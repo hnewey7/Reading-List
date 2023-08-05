@@ -50,9 +50,9 @@ def main(numberRead, stack, currentRead, numberBook):
     
     # Prompt user for command input
     userCommand = promptInput()
-#    
-#    # Evaluate user input.
-#    [numberRead, stack] = evalInput(userCommand)
+    
+    # Evaluate user input.
+    [numberRead, stack] = evalInput(userCommand, numberRead, stack)
 
 # Function for displaying stats.
 def displayStats(numberRead, stack, currentRead, numberBook):
@@ -81,6 +81,20 @@ def promptInput():
             break
 
     return userCommand
+
+# Function for evaluating the user input.
+def evalInput(userCommand, numberRead, stack):
+    
+    # Evaluating userCommand.
+    if userCommand == "Add":
+        # Prompt user to add another book and adding to stack.
+        newBook = input("Enter new book: ")
+        stack.push(newBook)
+    elif userCommand == "Completed":
+        # Remove last item from stack.
+        stack.pop()
+        
+    return numberRead, stack
 # - - - - - - - - - - - - - - - - - - - - - 
 # On close function.
 #def onClose():
