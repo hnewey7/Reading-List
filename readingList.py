@@ -36,27 +36,36 @@ def getData(logPath):
     # Extracting stats from data.
     numberRead = datalist[0]
     stack = datalist[1:len(datalist)]
-
-    return numberRead, stack
+    currentRead = stack[-1]
+    numberBook = len(stack)
+    
+    return numberRead, stack, currentRead, numberBook
 
 # - - - - - - - - - - - - - - - - - - - - - 
 # Main function.
-#def main():
-#    # Displaying statistics for user.
-#    displayStats(numberRead, stack)
-#    
+def main(numberRead, stack, currentRead, numberBook):
+    # Displaying statistics for user.
+    displayStats(numberRead, stack)
+    
 #    # Prompt user for command input
 #    userCommand = promptInput()
 #    
 #    # Evaluate user input.
 #    [numberRead, stack] = evalInput(userCommand)
-#    
+
+# Function for displaying stats.
+def displayStats(numberRead, stack):
+    
+    #print()
+    
+    return
 # - - - - - - - - - - - - - - - - - - - - - 
 # On close function.
 #def onClose():
 #    # Saving data.
 #    saveData(numberRead, stack)
-#    
-init()
-#main()
+
+
+[numberRead, stack, currentRead, numberBook] = init()
+main(numberRead, stack, currentRead, numberBook)
 #onClose()
