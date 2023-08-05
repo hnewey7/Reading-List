@@ -7,6 +7,7 @@ Created on Thu Aug  3 08:13:28 2023
 
 import os
 import pandas
+import keyboard
 
 # - - - - - - - - - - - - - - - - - - - - - 
 # Initialisation function.
@@ -47,8 +48,8 @@ def main(numberRead, stack, currentRead, numberBook):
     # Displaying statistics for user.
     displayStats(numberRead, stack, currentRead, numberBook)
     
-#    # Prompt user for command input
-#    userCommand = promptInput()
+    # Prompt user for command input
+    userCommand = promptInput()
 #    
 #    # Evaluate user input.
 #    [numberRead, stack] = evalInput(userCommand)
@@ -60,8 +61,26 @@ def displayStats(numberRead, stack, currentRead, numberBook):
     print("Currently Reading: " + str(currentRead))
     print("Number of Books to Read: " + str(numberBook))
     print("Books Read: " + str(numberRead))
+
+# Function to prompt user input.
+def promptInput():
     
-    return
+    # Prompting user input.
+    userCommand = print("Select your input: [Add(a)/Completed(c)/Exit(e)] ")
+    
+    # Waiting for user input.
+    while True:
+        if keyboard.is_pressed('a'):
+            userCommand = "Add"
+            break
+        elif keyboard.is_pressed('c'):
+            userCommand = "Completed"
+            break
+        elif keyboard.is_pressed('e'):
+            userCommand = "Exit"
+            break
+
+    return userCommand
 # - - - - - - - - - - - - - - - - - - - - - 
 # On close function.
 #def onClose():
