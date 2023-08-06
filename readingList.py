@@ -61,6 +61,7 @@ def displayStats(numberRead, stack, currentRead, numberBook):
     print("Currently Reading: " + str(currentRead))
     print("Number of Books to Read: " + str(numberBook))
     print("Books Read: " + str(numberRead))
+    print(" - - - - - - - - - - - - - - - - - - ")
 
 # Function to prompt user input.
 def promptInput():
@@ -72,12 +73,15 @@ def promptInput():
     while True:
         if keyboard.is_pressed('a'):
             userCommand = "Add"
+            keyboard.send("backspace")
             break
         elif keyboard.is_pressed('c'):
             userCommand = "Completed"
+            keyboard.send("backspace")
             break
         elif keyboard.is_pressed('e'):
             userCommand = "Exit"
+            keyboard.send("backspace")
             break
 
     return userCommand
@@ -89,7 +93,7 @@ def evalInput(userCommand, numberRead, stack):
     if userCommand == "Add":
         # Prompt user to add another book and adding to stack.
         newBook = input("Enter new book: ")
-        stack.push(newBook)
+        stack.append(newBook)
     elif userCommand == "Completed":
         # Remove last item from stack.
         stack.pop()
