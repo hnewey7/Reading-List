@@ -33,14 +33,19 @@ def getLog():
 def getData(logPath):
     # Reading data from csv file.
     data = pandas.read_csv(logPath)
-    print(data)
     datalist = data['log'].values.tolist()
-    print(datalist)
+
     # Extracting stats from data.
-    numberRead = datalist[0]
+    numberRead = int(datalist[0])
     stack = datalist[1:len(datalist)]
-    currentRead = stack[len(stack)-1]
-    numberBook = len(stack)
+    
+    # Evaluating statistics depending on length of stack.
+    if len(stack)>0:
+        currentRead = stack[len(stack)-1]
+        numberBook = len(stack)
+    else:
+        currentRead = "Not reading anything."
+        numberBook = 0
     
     return numberRead, stack, currentRead, numberBook
 
@@ -59,6 +64,10 @@ def main(numberRead, stack, currentRead, numberBook, logPath):
     # Saving data.
     saveData(numberRead, stack, logPath)
     
+    # Exiting script.
+    if userCommand == "Exit":
+        os._exit(0)
+        
 # Function for displaying stats.
 def displayStats(numberRead, stack, currentRead, numberBook):
     
@@ -96,17 +105,23 @@ def promptInput():
 
 # Function for evaluating the user input.
 def evalInput(userCommand, numberRead, stack):
-    print(stack)
+
     # Evaluating userCommand.
     if userCommand == "Add":
         # Prompt user to add another book and adding to stack.
         newBook = input("Enter new book: ")
         stack.append(newBook)
     elif userCommand == "Completed":
-        # Remove last item from stack.
-        stack.pop()
-        print(stack)
-        
+        # Evaluating whether can be completed.
+        if len(stack)>0: 
+            # Adding one to count.
+            numberRead = numberRead + 1
+            # Remove last item from stack.
+            stack.pop()
+        else:
+            print("Reading list is currently empty.")
+            time.sleep(2)
+            
     return numberRead, stack
 
 # Function for saving data.
@@ -137,7 +152,7 @@ def loop():
     main(numberRead, stack, currentRead, numberBook, logPath)
     
     # Clearing terminal.
-    #os.system('cls')
+    os.system('cls')
     
     # Loop.
     loop()
