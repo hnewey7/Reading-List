@@ -5,6 +5,7 @@ Created on Thu Aug  3 08:13:28 2023
 @author: hnewey7
 """
 
+import sys
 import os
 import pandas
 import keyboard
@@ -24,29 +25,38 @@ def init():
 # Get log function
 def getLog():
     # Getting events log path.
-    folderPath = os.path.dirname(os.path.abspath(__file__))
+    folderPath = os.path.dirname(os.path.abspath(sys.argv[0]))
     logPath = folderPath + "\\test.csv"
     
     return logPath
 
 # Get data function.
 def getData(logPath):
-    # Reading data from csv file.
-    data = pandas.read_csv(logPath)
-    datalist = data['log'].values.tolist()
-
-    # Extracting stats from data.
-    numberRead = int(datalist[0])
-    stack = datalist[1:len(datalist)]
     
-    # Evaluating statistics depending on length of stack.
-    if len(stack)>0:
-        currentRead = stack[len(stack)-1]
-        numberBook = len(stack)
+    # Evaluating if logPath exists.
+    if os.path.exists(logPath):
+        # Reading data from csv file.
+        data = pandas.read_csv(logPath)
+        datalist = data['log'].values.tolist()
+    
+        # Extracting stats from data.
+        numberRead = int(datalist[0])
+        stack = datalist[1:len(datalist)]
+        
+        # Evaluating statistics depending on length of stack.
+        if len(stack)>0:
+            currentRead = stack[len(stack)-1]
+            numberBook = len(stack)
+        else:
+            currentRead = "Not reading anything."
+            numberBook = 0
     else:
+        # Setting default stats.
+        numberRead = 0
+        stack = []
         currentRead = "Not reading anything."
         numberBook = 0
-    
+        
     return numberRead, stack, currentRead, numberBook
 
 # - - - - - - - - - - - - - - - - - - - - - 
