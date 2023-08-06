@@ -18,7 +18,7 @@ def init():
     # Getting data from csv file.
     [numberRead, stack, currentRead, numberBook] = getData(logPath)
     
-    return numberRead, stack, currentRead, numberBook
+    return numberRead, stack, currentRead, numberBook, logPath
 
 # Get log function
 def getLog():
@@ -44,7 +44,7 @@ def getData(logPath):
 
 # - - - - - - - - - - - - - - - - - - - - - 
 # Main function.
-def main(numberRead, stack, currentRead, numberBook):
+def main(numberRead, stack, currentRead, numberBook, logPath):
     # Displaying statistics for user.
     displayStats(numberRead, stack, currentRead, numberBook)
     
@@ -53,6 +53,9 @@ def main(numberRead, stack, currentRead, numberBook):
     
     # Evaluate user input.
     [numberRead, stack] = evalInput(userCommand, numberRead, stack)
+    
+    # Saving data.
+    saveData(numberRead, stack)
 
 # Function for displaying stats.
 def displayStats(numberRead, stack, currentRead, numberBook):
@@ -99,12 +102,25 @@ def evalInput(userCommand, numberRead, stack):
         stack.pop()
         
     return numberRead, stack
-# - - - - - - - - - - - - - - - - - - - - - 
-# On close function.
-#def onClose():
-#    # Saving data.
-#    saveData(numberRead, stack)
 
-[numberRead, stack, currentRead, numberBook] = init()
-main(numberRead, stack, currentRead, numberBook)
-#onClose()
+# Function for saving data.
+def saveData(numberRead, stack):
+    # Creating datalist.
+    datalist = []
+    
+    #Appending datalist with data.
+    datalist.append("log")
+    datalist.append(numberRead)
+    for item in stack:
+        datalist.append(item)
+    
+    # Creating dataframe from datalist.
+    dataframe = pandas.DataFrame(datalist)
+    
+    # Converting to csv file.
+    dataframe.to_csv(logPath, header=None)
+    
+# - - - - - - - - - - - - - - - - - - - - - 
+
+[numberRead, stack, currentRead, numberBook, logPath] = init()
+main(numberRead, stack, currentRead, numberBook, logPath)
