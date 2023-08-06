@@ -8,6 +8,7 @@ Created on Thu Aug  3 08:13:28 2023
 import os
 import pandas
 import keyboard
+import time
 
 # - - - - - - - - - - - - - - - - - - - - - 
 # Initialisation function.
@@ -32,12 +33,13 @@ def getLog():
 def getData(logPath):
     # Reading data from csv file.
     data = pandas.read_csv(logPath)
-    datalist = data["log"].tolist()
-    
+    print(data)
+    datalist = data['log'].values.tolist()
+    print(datalist)
     # Extracting stats from data.
     numberRead = datalist[0]
     stack = datalist[1:len(datalist)]
-    currentRead = stack[-1]
+    currentRead = stack[len(stack)-1]
     numberBook = len(stack)
     
     return numberRead, stack, currentRead, numberBook
@@ -55,8 +57,8 @@ def main(numberRead, stack, currentRead, numberBook, logPath):
     [numberRead, stack] = evalInput(userCommand, numberRead, stack)
     
     # Saving data.
-    saveData(numberRead, stack)
-
+    saveData(numberRead, stack, logPath)
+    
 # Function for displaying stats.
 def displayStats(numberRead, stack, currentRead, numberBook):
     
@@ -86,12 +88,15 @@ def promptInput():
             userCommand = "Exit"
             keyboard.send("backspace")
             break
-
+    
+    # Wait for 0.5 seconds.
+    time.sleep(0.5)
+    
     return userCommand
 
 # Function for evaluating the user input.
 def evalInput(userCommand, numberRead, stack):
-    
+    print(stack)
     # Evaluating userCommand.
     if userCommand == "Add":
         # Prompt user to add another book and adding to stack.
@@ -100,11 +105,12 @@ def evalInput(userCommand, numberRead, stack):
     elif userCommand == "Completed":
         # Remove last item from stack.
         stack.pop()
+        print(stack)
         
     return numberRead, stack
 
 # Function for saving data.
-def saveData(numberRead, stack):
+def saveData(numberRead, stack, logPath):
     # Creating datalist.
     datalist = []
     
@@ -118,9 +124,24 @@ def saveData(numberRead, stack):
     dataframe = pandas.DataFrame(datalist)
     
     # Converting to csv file.
-    dataframe.to_csv(logPath, header=None)
+    dataframe.to_csv(logPath, header=None, index=None)
     
 # - - - - - - - - - - - - - - - - - - - - - 
 
-[numberRead, stack, currentRead, numberBook, logPath] = init()
-main(numberRead, stack, currentRead, numberBook, logPath)
+# Looping function.
+def loop():
+    # Initialisation.
+    [numberRead, stack, currentRead, numberBook, logPath] = init()
+    
+    # Main.
+    main(numberRead, stack, currentRead, numberBook, logPath)
+    
+    # Clearing terminal.
+    #os.system('cls')
+    
+    # Loop.
+    loop()
+    
+# - - - - - - - - - - - - - - - - - - - - - 
+
+loop()
