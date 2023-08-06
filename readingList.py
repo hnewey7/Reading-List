@@ -26,7 +26,7 @@ def init():
 def getLog():
     # Getting events log path.
     folderPath = os.path.dirname(os.path.abspath(sys.argv[0]))
-    logPath = folderPath + "\\test.csv"
+    logPath = folderPath + "\\log.csv"
     
     return logPath
 
